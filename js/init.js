@@ -10,15 +10,15 @@ let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-let camera_distance = 100;
+let camera_distance = 30;
 let camera_rotation = 0;
 
-let attractor = new Attractor(scene);
+let attractor = new Attractor();
 
 function update() {
 	requestAnimationFrame(update);
 
-	attractor.update();
+	attractor.update(scene);
 
 	camera.position.x = Math.sin(camera_rotation) * camera_distance;
 	camera.position.z = Math.cos(camera_rotation) * camera_distance + 30;
@@ -27,4 +27,5 @@ function update() {
 
 	renderer.render(scene, camera);
 }
+
 update();
