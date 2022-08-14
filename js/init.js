@@ -21,7 +21,8 @@ function update() {
 	attractor.update(scene);
 
 	camera.position.x = Math.sin(camera_rotation) * camera_distance;
-	camera.position.z = Math.cos(camera_rotation) * camera_distance + 30;
+	camera.position.z = Math.cos(camera_rotation) * camera_distance;
+	camera.position.add(attractor.region.center);
 	camera.rotation.y = camera_rotation;
 	camera_rotation = (camera_rotation + 0.01) % (2*Math.PI);
 

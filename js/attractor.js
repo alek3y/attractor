@@ -7,7 +7,7 @@ class Curve {
 		this.geometry = new THREE.BufferGeometry();
 		this.object = new THREE.Mesh(
 			new MeshLine(),
-			new MeshLineMaterial({color: color, lineWidth: width, sizeAttenuation: 1})
+			new MeshLineMaterial({color: color, lineWidth: width})
 		);
 	}
 
@@ -56,7 +56,7 @@ class Curve {
 
 class Attractor {
 	constructor(
-		time_step = 0.5, amount_curves = 70,
+		time_step = 0.8, curves_amount = 50, curve_length = 50, curve_width = 0.3,
 		{sigma = 10, beta = 8/3, rho = 28} = {},
 		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60)
 	) {
@@ -76,7 +76,7 @@ class Attractor {
 		this.region = region;
 
 		this.curves = [];
-		for (let i = 0; i < amount_curves; i++) {
+		for (let i = 0; i < curves_amount; i++) {
 			let color = new THREE.Color();
 			color.setHSL(
 				Math.random(),
@@ -102,7 +102,7 @@ class Attractor {
 			position.add(region.center);	// Offset the point inside the region
 
 			this.curves.push(
-				new Curve(position, color, 0.2, 50)	// TODO: Add variable for length
+				new Curve(position, color, curve_width, curve_length)
 			);
 		}
 	}
