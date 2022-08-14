@@ -73,6 +73,11 @@ class Attractor {
 		this.delta_t = time_step;
 		this.region = region;
 
+		this.stepping = {
+			point: new THREE.Vector3(),
+			delta: new THREE.Vector3()
+		}
+
 		this.curves = [];
 		for (let i = 0; i < amount_curves; i++) {
 			let color = Math.round(Math.random() * 0xffffff);
@@ -102,9 +107,10 @@ class Attractor {
 
 	step() {
 		for (let i = 0; i < this.curves.length; i++) {
-			let point = this.curves[i].head.clone();
+			let {point, delta} = this.stepping;
 
-			let delta = new THREE.Vector3(
+			point.copy(this.curves[i].head);
+			delta.set(
 				this.sigma * (point.y - point.x),
 				point.x * (this.rho - point.z) - point.y,
 				point.x * point.y - this.beta * point.z
