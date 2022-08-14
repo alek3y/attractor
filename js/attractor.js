@@ -54,7 +54,7 @@ class Curve {
 
 class Attractor {
 	constructor(
-		time_step = 0.008, amount_curves = 50,
+		time_step = 0.5, amount_curves = 70,
 		{sigma = 10, beta = 8/3, rho = 28} = {},
 		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60)
 	) {
@@ -100,7 +100,7 @@ class Attractor {
 			position.add(region.center);	// Offset the point inside the region
 
 			this.curves.push(
-				new Curve(position, color, 0.2, 10)	// TODO: Add variable for length
+				new Curve(position, color, 0.2, 50)	// TODO: Add variable for length
 			);
 		}
 	}
@@ -115,7 +115,9 @@ class Attractor {
 				point.x * (this.rho - point.z) - point.y,
 				point.x * point.y - this.beta * point.z
 			);
-			delta.multiplyScalar(this.delta_t);	// Multiply every component by delta_t
+
+			let distance = Math.sqrt(delta.x**2 + delta.y**2 + delta.z**2);	// Modulus of the vector
+			delta.divideScalar(distance / this.delta_t);	// Scale down every component
 			point.add(delta);	// Offset the components by their respective deltas
 
 			if (!this.region.containsPoint(point)) {

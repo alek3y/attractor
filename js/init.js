@@ -10,7 +10,7 @@ let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-let camera_distance = 30;
+let camera_distance = 50;
 let camera_rotation = 0;
 
 let attractor = new Attractor();
