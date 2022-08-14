@@ -44,6 +44,8 @@ class Curve {
 		}
 
 		scene.remove(this.object);
+		this.object.geometry.dispose();
+
 		this.geometry.setFromPoints(this.points);
 		this.object.geometry.setGeometry(this.geometry);
 		scene.add(this.object);
