@@ -13,7 +13,7 @@ document.body.appendChild(renderer.domElement);
 let camera_distance = 100;
 let camera_rotation = 0;
 
-let attractor = new Attractor(scene, {sigma: 10, beta: 8/3, rho: 28});
+let attractor = new Attractor(scene);
 
 function update() {
 	requestAnimationFrame(update);
