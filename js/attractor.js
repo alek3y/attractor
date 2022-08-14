@@ -77,7 +77,12 @@ class Attractor {
 
 		this.curves = [];
 		for (let i = 0; i < amount_curves; i++) {
-			let color = Math.round(Math.random() * 0xffffff);
+			let color = new THREE.Color();
+			color.setHSL(
+				Math.random(),
+				Math.random() * 0.65 + 0.25,
+				Math.random() * 0.10 + 0.80
+			);
 
 			// Generate a point in the 2D xz-plane
 			let xz_angle = Math.random() * 2*Math.PI;
