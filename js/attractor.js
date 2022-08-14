@@ -62,6 +62,11 @@ class Attractor {
 			delta.multiplyScalar(this.delta_t);	// Multiply every component by delta_t
 
 			point.add(delta);	// Offset the components by their respective deltas
+
+			if (!this.region.containsPoint(point)) {
+				this.points.splice(i, 1);
+				i--;
+			}
 		}
 	}
 
