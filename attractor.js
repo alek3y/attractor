@@ -117,7 +117,7 @@ class Attractor {
 				point.x * point.y - this.beta * point.z
 			);
 
-			let distance = Math.sqrt(delta.x**2 + delta.y**2 + delta.z**2);	// Modulus of the vector
+			let distance = delta.length();	// Modulus of the vector
 			delta.divideScalar(distance / this.delta_t);	// Scale down every component
 			point.add(delta);	// Offset the components by their respective deltas
 
