@@ -14,14 +14,19 @@ let camera = new CameraPath(
 		[[0, 0, 50], [0, 0, 0]],
 		[[0, 0, 50], [0, 0, 0]],
 	],
-	10
+	5, 50, false
 );
+
+let controls = new CameraDebug(camera.camera, renderer.domElement);
 
 function update() {
 	requestAnimationFrame(update);
 
 	attractor.update(scene);
 	camera.update();
+
+	// DEBUG
+	controls.update();
 
 	renderer.render(scene, camera.camera);
 }

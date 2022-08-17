@@ -1,3 +1,41 @@
+class CameraDebug {
+	constructor(
+		camera, canvas,
+		movementSpeed = 10, rollSpeed = Math.PI/12,
+		dragToLook = true, queryKey = "g"
+	) {
+		this.camera = camera;
+		this.clock = new THREE.Clock();
+
+		this.controls = new THREE.FlyControls(this.camera, canvas);
+		this.controls.movementSpeed = movementSpeed;
+		this.controls.rollSpeed = rollSpeed;
+		this.controls.dragToLook = dragToLook;
+
+		document.addEventListener("keypress", (e) => {
+			if (e.key === "g") {
+				console.info("Camera:",
+					JSON.stringify(this.query()).replace(/,/g, ", ")
+				);
+			}
+		});
+	}
+
+	query() {
+		let position = this.camera.position.toArray();
+		let rotation = this.camera.rotation.toArray().splice(0, 3);
+
+		return [
+			position.map(coord => coord.toFixed(2)/1),
+			rotation.map(angle => angle.toFixed(2)/1)
+		];
+	}
+
+	update() {
+		this.controls.update(this.clock.getDelta());
+	}
+}
+
 class CameraPath {
 	constructor(
 		camera,
