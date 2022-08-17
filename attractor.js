@@ -56,7 +56,7 @@ class Curve {
 
 class Attractor {
 	constructor(
-		time_step = 0.8, curves_amount = 50, curve_length = 50, curve_width = 0.3,
+		timeStep = 0.8, curvesAmount = 50, curveLength = 50, curveWidth = 0.3,
 		{sigma = 10, beta = 8/3, rho = 28} = {},
 		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60)
 	) {
@@ -72,11 +72,11 @@ class Attractor {
 		this.sigma = sigma;
 		this.beta = beta;
 		this.rho = rho;
-		this.delta_t = time_step;
+		this.deltaTime = timeStep;
 		this.region = region;
 
 		this.curves = [];
-		for (let i = 0; i < curves_amount; i++) {
+		for (let i = 0; i < curvesAmount; i++) {
 			let color = new THREE.Color();
 			color.setHSL(
 				Math.random(),
@@ -85,24 +85,24 @@ class Attractor {
 			);
 
 			// Generate a point in the 2D xz-plane
-			let xz_angle = Math.random() * 2*Math.PI;
-			let xz_radius = Math.random() * region.radius;
+			let xzAngle = Math.random() * 2*Math.PI;
+			let xzRadius = Math.random() * region.radius;
 			let [x, z] = [
-				Math.cos(xz_angle) * xz_radius,
-				Math.sin(xz_angle) * xz_radius
+				Math.cos(xzAngle) * xzRadius,
+				Math.sin(xzAngle) * xzRadius
 			];
 
 			// Rotate the point in the 2D xy-plane
-			let yx_angle = Math.random() * 2*Math.PI;
-			let yx_radius = x;
-			let y = Math.sin(yx_angle) * yx_radius;
-			x = Math.cos(yx_angle) * yx_radius;
+			let yxAngle = Math.random() * 2*Math.PI;
+			let yxRadius = x;
+			let y = Math.sin(yxAngle) * yxRadius;
+			x = Math.cos(yxAngle) * yxRadius;
 
 			let position = new THREE.Vector3(x, y, z);
 			position.add(region.center);	// Offset the point inside the region
 
 			this.curves.push(
-				new Curve(position, color, curve_width, curve_length)
+				new Curve(position, color, curveWidth, curveLength)
 			);
 		}
 	}
@@ -118,7 +118,7 @@ class Attractor {
 			);
 
 			let distance = delta.length();	// Modulus of the vector
-			delta.divideScalar(distance / this.delta_t);	// Scale down every component
+			delta.divideScalar(distance / this.deltaTime);	// Scale down every component
 			point.add(delta);	// Offset the components by their respective deltas
 
 			if (!this.region.containsPoint(point)) {

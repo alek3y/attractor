@@ -1,4 +1,4 @@
-class PathCamera {
+class CameraPath {
 	constructor(
 		camera,
 		stops,	// Rays of the places where the camera will stop
@@ -10,27 +10,27 @@ class PathCamera {
 		this.steps = steps;
 		this.loop = loop;
 
-		let stops_origins = [], stops_directions = [];
+		let stopsOrigins = [], stopsDirections = [];
 		if (stops[0] instanceof THREE.Ray) {
 			stops.forEach(stop => {
-				stops_origins.push(stop.origin);
-				stops_directions.push(stop.direction);
+				stopsOrigins.push(stop.origin);
+				stopsDirections.push(stop.direction);
 			})
 		} else {
 			stops.forEach(([origin, direction]) => {
-				stops_origins.push(new THREE.Vector3().fromArray(origin));
-				stops_directions.push(new THREE.Vector3().fromArray(direction));
+				stopsOrigins.push(new THREE.Vector3().fromArray(origin));
+				stopsDirections.push(new THREE.Vector3().fromArray(direction));
 			})
 		}
 
 		// Interpolate the points and rotations to make them smoother
-		let interpolated_points = new THREE.CatmullRomCurve3(stops_origins).getPoints(detail);
-		let interpolated_rotations = new THREE.CatmullRomCurve3(stops_directions).getPoints(detail);
+		let interpolatedPoints = new THREE.CatmullRomCurve3(stopsOrigins).getPoints(detail);
+		let interpolatedRotations = new THREE.CatmullRomCurve3(stopsDirections).getPoints(detail);
 
 		this.stops = [];
-		for (let i = 0; i < interpolated_points.length; i++) {
+		for (let i = 0; i < interpolatedPoints.length; i++) {
 			this.stops.push(new THREE.Ray(
-				interpolated_points[i], interpolated_rotations[i]
+				interpolatedPoints[i], interpolatedRotations[i]
 			));
 		}
 

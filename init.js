@@ -5,7 +5,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 let attractor = new Attractor();
-let camera = new PathCamera(
+let camera = new CameraPath(
 	new THREE.PerspectiveCamera(
 		75, window.innerWidth / window.innerHeight,
 		0.1, 1000
