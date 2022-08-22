@@ -60,15 +60,6 @@ class Attractor {
 		{sigma = 10, beta = 8/3, rho = 28} = {},
 		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60)
 	) {
-
-		// DEBUG: Sphere showing where the attractor is bounded
-		//this.enclosing = new THREE.Mesh(
-		//	new THREE.SphereGeometry(region.radius, 64, 32),
-		//	new THREE.MeshBasicMaterial({color: 0xb04343, wireframe: true})
-		//);
-		//this.enclosing.position.copy(region.center);
-		//scene.add(this.enclosing);
-
 		this.sigma = sigma;
 		this.beta = beta;
 		this.rho = rho;
