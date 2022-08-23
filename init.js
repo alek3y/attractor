@@ -5,7 +5,9 @@ let renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-let attractor = new Attractor();	// Use the default values for the Lorenz attractor
+let attractor = new Attractor({
+	rotation: new THREE.Vector3(0, 0, Math.PI/10)
+});
 
 // DEBUG: Sphere showing where the attractor is bounded
 //let enclosing = new THREE.Mesh(
@@ -16,14 +18,15 @@ let attractor = new Attractor();	// Use the default values for the Lorenz attrac
 //scene.add(enclosing);
 
 let camera = new THREE.PerspectiveCamera(
-	75, window.innerWidth / window.innerHeight,
+	80, window.innerWidth / window.innerHeight,
 	0.1, 1000
 );
-camera.position.set(-12.62, 3.44, 57.34);
+camera.position.set(-12.29, -1.91, 63.08);
 
 let orbit = new THREE.OrbitControls(camera, renderer.domElement);
 orbit.target.copy(attractor.region.center);
 orbit.autoRotate = true;
+orbit.autoRotateSpeed = 1;
 
 function update() {
 	requestAnimationFrame(update);

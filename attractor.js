@@ -55,16 +55,21 @@ class Curve {
 }
 
 class Attractor {
-	constructor(
+	constructor({
+		sigma = 10, beta = 8/3, rho = 28,
 		timeStep = 0.8, curvesAmount = 50, curveLength = 50, curveWidth = 0.3,
-		{sigma = 10, beta = 8/3, rho = 28} = {},
-		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60)
-	) {
+		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60),
+		rotation = new THREE.Vector3()
+	} = {}) {
 		this.sigma = sigma;
 		this.beta = beta;
 		this.rho = rho;
 		this.deltaTime = timeStep;
 		this.region = region;
+
+		// Set up rotation transformations
+		this.rotation = new THREE.Euler().setFromVector3(rotation);
+		this.invertRotation = new THREE.Euler().setFromVector3(rotation.negate());
 
 		this.curves = [];
 		for (let i = 0; i < curvesAmount; i++) {
@@ -100,7 +105,10 @@ class Attractor {
 
 	step() {
 		for (let i = 0; i < this.curves.length; i++) {
-			let point = this.curves[i].head.clone();
+			let rotatedPoint = this.curves[i].head;
+
+			let point = rotatedPoint.clone()
+				.applyEuler(this.invertRotation);	// Restore the non-rotated position
 
 			let delta = new THREE.Vector3(
 				this.sigma * (point.y - point.x),
@@ -111,6 +119,7 @@ class Attractor {
 			let distance = delta.length();	// Modulus of the vector
 			delta.divideScalar(distance / this.deltaTime);	// Scale down every component
 			point.add(delta);	// Offset the components by their respective deltas
+			point.applyEuler(this.rotation);	// Rotate the point visually
 
 			if (!this.region.containsPoint(point)) {
 				this.curves[i].dispose();
