@@ -56,8 +56,8 @@ class Curve {
 
 class Attractor {
 	constructor({
-		sigma = 10, beta = 8/3, rho = 28,
-		timeStep = 0.8, curvesAmount = 50, curveLength = 50, curveWidth = 0.3,
+		sigma = 10, beta = 8/3, rho = 28, timeStep = 0.8,
+		curvesAmount = 50, curveLengthRange = [30, 65], curveWidth = 0.3,
 		region = new THREE.Sphere(new THREE.Vector3(0, 0, 30), 60),
 		rotation = new THREE.Vector3()
 	} = {}) {
@@ -80,6 +80,10 @@ class Attractor {
 				Math.random() * 0.10 + 0.80
 			);
 
+			let length = Math.round(
+				Math.random() * (curveLengthRange[1] - curveLengthRange[0])
+			) + curveLengthRange[0];
+
 			// Generate a point in the 2D xz-plane
 			let xzAngle = Math.random() * 2*Math.PI;
 			let xzRadius = Math.random() * region.radius;
@@ -98,7 +102,7 @@ class Attractor {
 			position.add(region.center);	// Offset the point inside the region
 
 			this.curves.push(
-				new Curve(position, color, curveWidth, curveLength)
+				new Curve(position, color, curveWidth, length)
 			);
 		}
 	}
